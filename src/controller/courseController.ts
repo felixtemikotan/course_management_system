@@ -14,7 +14,6 @@ export async function createCourse(
   next: NextFunction
 ) {
   const id = uuidv4();
-  // let course = {...req.body, id}
   try {
     const verified = req.user;
     const validationResult = createCourseSchema.validate(req.body, options);
@@ -28,10 +27,8 @@ export async function createCourse(
       ...req.body,
       userId: verified.id,
     });
-    res.status(201).json({
-      msg: "You have successfully created a course",
-      record,
-    });
+
+    res.render("createrefresh");
   } catch (err) {
     res.status(500).json({
       msg: "failed to create",
@@ -48,7 +45,6 @@ export async function getCourse(
   try {
     const limit = req.query?.limit as number | undefined;
     const offset = req.query?.offset as number | undefined;
-    //  const record = await CourseInstance.findAll({where: {},limit, offset})
     const record = await CourseInstance.findAll({
       limit,
       offset,
@@ -68,11 +64,6 @@ export async function getCourse(
       ],
     });
     res.render("index", { record });
-    // res.status(200).json({
-    //   msg: "You have successfully fetch all courses",
-    //   count: record,
-    //   record: record,
-    // });
   } catch (error) {
     res.status(500).json({
       msg: "failed to read",
@@ -89,11 +80,25 @@ export async function getSingleCourse(
   try {
     const { id } = req.params;
     const record = await CourseInstance.findOne({ where: { id } });
-    res.render("index", { record });
-    // return res.status(200).json({
-    //   msg: "Successfully gotten user information",
-    //   record,
-    // });
+
+    res.render("updatecourse", { record });
+  } catch (error) {
+    res.status(500).json({
+      msg: "failed to read single course",
+      route: "/read/:id",
+    });
+  }
+}
+
+export async function getDeleteSingleCourse(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { id } = req.params;
+    const record = await CourseInstance.findOne({ where: { id } });
+    res.render("deletecourse", { record });
   } catch (error) {
     res.status(500).json({
       msg: "failed to read single course",
@@ -129,10 +134,8 @@ export async function updateCourse(
       image: image,
       price: price,
     });
-    res.status(200).json({
-      msg: "You have successfully updated your course",
-      updatedrecord,
-    });
+
+    res.render("updaterefresh");
   } catch (error) {
     res.status(500).json({
       msg: "failed to update",
@@ -155,10 +158,7 @@ export async function deleteCourse(
       });
     }
     const deletedRecord = await record.destroy();
-    return res.status(200).json({
-      msg: "Course deleted successfully",
-      deletedRecord,
-    });
+    res.render("deleterefresh");
   } catch (error) {
     res.status(500).json({
       msg: "failed to delete",

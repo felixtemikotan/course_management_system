@@ -53,10 +53,19 @@
                 <ul class="nav navbar-nav navbar-nav-first">
                     <li><a href="#top" class="smoothScroll">Home</a></li>
                     <li><a href="#courses" class="smoothScroll">View Your Courses</a></li>
+                    <li><a href="/users/addnew" class="smoothScroll">Add New Courses</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><i class="fa fa-phone"></i> +2348163660175</a></li>
+                    <li>
+                        <a href="#"><i class="fa fa-user"></i><b>
+                            <%=`Welcome ${record.firstname}`%>
+                        </b> </a>
+                    </li>
+                    <li>
+                        <a href="/users/logout"> <i class="fa fa-sign-out" aria-hidden="true"></i>Log out</a>
+                    </li>
+
                 </ul>
             </div>
 
@@ -75,7 +84,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <h1>XilefTem Education Center</h1>
                                 <h3>Our online courses are designed to fit in your industry supporting all-round with latest technologies.</h3>
-                                <a href="#feature" class="section-btn btn btn-default smoothScroll">Discover more</a>
+
                             </div>
                         </div>
                     </div>
@@ -87,7 +96,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <h1>Start your journey with our online courses</h1>
                                 <h3>Our online courses are built in partnership with technology leaders and are designed to meet industry demands.</h3>
-                                <a href="#courses" class="section-btn btn btn-default smoothScroll">Take a course</a>
+
                             </div>
                         </div>
                     </div>
@@ -98,8 +107,8 @@
                         <div class="container">
                             <div class="col-md-6 col-sm-12">
                                 <h1>Efficient Learning Methods</h1>
-                                <h3>Nam eget sapien vel nibh euismod vulputate in vel nibh. Quisque eu ex eu urna venenatis sollicitudin ut at libero. Visit <a rel="nofollow" href="https://www.facebook.com/templatemo">templatemo</a> page.</h3>
-                                <a href="#contact" class="section-btn btn btn-default smoothScroll">Let's chat</a>
+                                <h3>Start your journey with our online courses</h3>
+
                             </div>
                         </div>
                     </div>
@@ -119,57 +128,53 @@
 
                 <div class="col-md-12 col-sm-12">
                     <div class="section-title">
-                        <h2>View My Courses </h2>
+                        <h2>View Courses Available <small>Upgrade your skills with our courses available</small></h2>
                     </div>
 
                     <div class="owl-carousel owl-theme owl-courses">
                         <!--  start  -->
-                        <%= records=record.course%>
-                            <% for (let element of records) {%>
-                                <div class="col-md-4 col-sm-4">
-                                    <div class="item">
-                                        <div class="courses-thumb">
-                                            <div class="courses-top">
-                                                <div class="courses-image">
-                                                    <img src="/images/courses-image5.jpg" class="img-responsive" alt="">
-                                                </div>
-                                                <div class="courses-date">
-                                                    <span><i class="fa fa-calendar"></i> <%= (new Date(element.createdAt)).toString()%></span>
-                                                    <span><i class="fa fa-clock-o"></i> 7 Hours</span>
-                                                </div>
+                        <% for (let element of record.course) {%>
+                            <div class="col-md-4 col-sm-4">
+                                <div class="item">
+                                    <div class="courses-thumb">
+                                        <div class="courses-top">
+                                            <div class="courses-image">
+                                                <img src="<%=element.image%>" class="img-responsive" style="width:100%;height:200px;" alt="">
                                             </div>
-
-                                            <div class="courses-detail">
-                                                <h3>
-                                                    <a href="#">
-                                                        <%=element.title%>
-                                                    </a>
-                                                </h3>
-                                                <p>
-                                                    <%=element.description%>
-                                                </p>
+                                            <div class="courses-date">
+                                                <span><i class="fa fa-calendar"></i>Date Created: <%= (new Date(element.createdAt)).toString()%></span>
+                                                <span><i class="fa fa-clock-o"></i>Course Duration: 7 Months</span>
                                             </div>
+                                        </div>
 
-                                            <div class="courses-info">
-                                                <div class="courses-author">
-                                                    <img src="/images/author-image1.jpg" class="img-responsive" alt="">
-                                                    <span><%=`${element.title}  ${element.title}`%></span>
-                                                    <span></p> Mobile No: <%=element.title%></span>
-                                                    <span></p> email: <%=element.title%></span>
+                                        <div class="courses-detail">
+                                            <h3>
+                                                <a href="#courses">
+                                                    <%=element.title%>
+                                                </a>
+                                            </h3>
+                                            <p>
+                                                <%=element.description%>
+                                            </p>
+                                        </div>
 
-                                                </div>
-                                                <div class="courses-price">
-                                                    <a href="#"><span>Course Price:<%=`${element.title} NGN`%></span></a>
-                                                </div>
-                                                <div class="courses-price" style="align-content: center;">
-                                                    <span style="align-self: center;"> <a href="#"><button>edit course</a></button><button><a href="#">update course</a></button><button><a href="#">delete</a></button></span>
-                                                </div>
+                                        <div class="courses-info">
+                                            <div class="courses-author">
+                                                <img src="/images/author-image1.jpg" class="img-responsive" alt="">
+
+                                            </div>
+                                            <div class="courses-price">
+                                                <a href="#"><span>Course Price:<%=`${element.price} NGN`%></span></a>
+                                            </div>
+                                            <div class="courses-price" style="float: left;">
+                                                <span style="align-self: center;"> <button><a href="/course/read/<%=element.id%>">update course</a></button><button><a href="/course/readdelete/<%=element.id%>">delete</a></button></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <%}%>
-                                    <!--  end  -->
+                            </div>
+                            <%}%>
+                                <!--  end  -->
 
 
                     </div>

@@ -52,8 +52,9 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-nav-first">
                     <li><a href="#top" class="smoothScroll">Home</a></li>
-                    <li><a href="/users/login" class="smoothScroll">User Login</a></li>
-                    <li><a href="#team" class="smoothScroll">Meet Our Instructors</a></li>
+                    <li>
+                        <a href="/users/login" class="smoothScroll"> <i class="fa fa-sign-in" aria-hidden="true"></i>User Login</a>
+                    </li>
                     <li><a href="#courses" class="smoothScroll">View Courses Availbale</a></li>
                 </ul>
 
@@ -196,7 +197,7 @@
                                     <div class="courses-thumb">
                                         <div class="courses-top">
                                             <div class="courses-image">
-                                                <img src="/images/courses-image5.jpg" class="img-responsive" alt="">
+                                                <img src="<%=element.image%>" class="img-responsive" style="width:100%;height:200px;" alt="">
                                             </div>
                                             <div class="courses-date">
                                                 <span><i class="fa fa-calendar"></i> <%= (new Date(element.createdAt)).toString()%></span>

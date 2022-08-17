@@ -2,6 +2,7 @@ import createError from "http-errors";
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
+import cookieSession from "cookie-session";
 import logger from "morgan";
 import db from "./config/database.config";
 
@@ -26,6 +27,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(express.static(path.join("public")));
 
 app.use("/users", userRouter);

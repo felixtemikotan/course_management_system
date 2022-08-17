@@ -51,10 +51,7 @@ export async function RegisterUser(
       address: req.body.address,
       password: passwordHash,
     });
-    res.status(201).json({
-      msg: "You have successfully created a user",
-      record,
-    });
+    res.render("signuprefresh");
   } catch (err) {
     res.status(500).json({
       msg: "failed to register",
@@ -86,31 +83,60 @@ export async function LoginUser(
     const validUser = await bcrypt.compare(req.body.password, record.password);
 
     if (!validUser) {
-      res.status(401).json({
+      return res.status(401).json({
         message: "Password do not match",
       });
     }
 
     if (validUser) {
-      res.cookie("auth", token, {
+      res.cookie("authorization", token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24,
       });
-      // res.cookie("token", token, {
-      //   httpOnly: true,
-      //   secure: true,
-      // });
       res.cookie("id", id, {
         httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
       });
       res.render("dashboard", { record });
-      // res.status(200).json({
-      //   message: "Successfully logged in",
-      //   token,
-      //   record,
-      // });
-      // res.render("dashboard", { User });
     }
+  } catch (err) {
+    res.status(500).json({
+      msg: "failed to login",
+      route: "/login",
+    });
+  }
+}
+
+export async function LogoutUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    res.clearCookie("authorization");
+    res.clearCookie("id");
+    res.render("logoutrefresh");
+  } catch (err) {
+    res.status(500).json({
+      msg: "failed to logout",
+      route: "/logout",
+    });
+  }
+}
+
+export async function defaultView(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const userId = req.cookies.id;
+    const record = (await UserInstance.findOne({
+      where: { id: userId },
+      include: [{ model: CourseInstance, as: "course" }],
+    })) as unknown as { [key: string]: string };
+
+    res.render("dashboard", { record });
   } catch (err) {
     res.status(500).json({
       msg: "failed to login",
@@ -127,7 +153,6 @@ export async function getUsers(
   try {
     const limit = req.query?.limit as number | undefined;
     const offset = req.query?.offset as number | undefined;
-    //  const record = await TodoInstance.findAll({where: {},limit, offset})
     const record = await UserInstance.findAndCountAll({
       limit,
       offset,
