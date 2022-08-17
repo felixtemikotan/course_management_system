@@ -107,6 +107,23 @@ export async function LoginUser(
   }
 }
 
+export async function LogoutUser(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    res.clearCookie("authorization");
+    res.clearCookie("id");
+    res.render("logoutrefresh");
+  } catch (err) {
+    res.status(500).json({
+      msg: "failed to logout",
+      route: "/logout",
+    });
+  }
+}
+
 export async function defaultView(
   req: Request,
   res: Response,

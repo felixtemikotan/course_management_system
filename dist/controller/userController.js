@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = exports.defaultView = exports.LoginUser = exports.RegisterUser = void 0;
+exports.getUsers = exports.defaultView = exports.LogoutUser = exports.LoginUser = exports.RegisterUser = void 0;
 const uuid_1 = require("uuid");
 const utils_1 = require("../utils/utils");
 const user_1 = require("../model/user");
@@ -95,6 +95,20 @@ async function LoginUser(req, res, next) {
     }
 }
 exports.LoginUser = LoginUser;
+async function LogoutUser(req, res, next) {
+    try {
+        res.clearCookie("authorization");
+        res.clearCookie("id");
+        res.render("logoutrefresh");
+    }
+    catch (err) {
+        res.status(500).json({
+            msg: "failed to logout",
+            route: "/logout",
+        });
+    }
+}
+exports.LogoutUser = LogoutUser;
 async function defaultView(req, res, next) {
     try {
         const userId = req.cookies.id;

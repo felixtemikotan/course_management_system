@@ -26,16 +26,6 @@ app.use((0, morgan_1.default)("dev"));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     keys: [
-//       /* secret keys */
-//     ],
-//     // Cookie Options
-//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-//   })
-// );
 app.use(express_1.default.static(path_1.default.join("public")));
 app.use("/users", user_1.default);
 app.use("/course", course_1.default);

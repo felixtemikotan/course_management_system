@@ -23,5 +23,6 @@ router.get("/dashboard", userController_1.defaultView, (req, res) => {
     res.render("dashboard");
 });
 router.post("/login", userController_1.LoginUser);
+router.get("/logout", userController_1.LogoutUser);
 router.get("/allusers", userController_1.getUsers);
 exports.default = router;

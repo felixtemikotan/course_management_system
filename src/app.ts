@@ -27,17 +27,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(
-//   cookieSession({
-//     name: "session",
-//     keys: [
-//       /* secret keys */
-//     ],
 
-//     // Cookie Options
-//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-//   })
-// );
 app.use(express.static(path.join("public")));
 
 app.use("/users", userRouter);

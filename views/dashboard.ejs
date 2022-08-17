@@ -57,7 +57,15 @@
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><i class="fa fa-phone"></i> +2348163660175</a></li>
+                    <li>
+                        <a href="#"><i class="fa fa-user"></i><b>
+                            <%=`Welcome ${record.firstname}`%>
+                        </b> </a>
+                    </li>
+                    <li>
+                        <a href="/users/logout"> <i class="fa fa-sign-out" aria-hidden="true"></i>Log out</a>
+                    </li>
+
                 </ul>
             </div>
 
