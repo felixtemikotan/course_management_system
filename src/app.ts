@@ -32,6 +32,7 @@ app.use(express.static(path.join("public")));
 
 app.use("/users", userRouter);
 app.use("/course", courseRouter);
+app.use("/", courseRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

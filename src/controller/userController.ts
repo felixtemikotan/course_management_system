@@ -9,6 +9,7 @@ import {
 import { UserInstance } from "../model/user";
 import bcrypt from "bcryptjs";
 import { CourseInstance } from "../model/course";
+import { LocalKey, LocalStorage } from "ts-localstorage";
 
 export async function RegisterUser(
   req: Request,
@@ -89,6 +90,8 @@ export async function LoginUser(
     }
 
     if (validUser) {
+      // const key = new LocalKey<null | string | unknown>("mykey", "");
+      // LocalStorage.setItem(key, "token");
       res.cookie("authorization", token, {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24,
@@ -100,6 +103,7 @@ export async function LoginUser(
       res.render("dashboard", { record });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json({
       msg: "failed to login",
       route: "/login",

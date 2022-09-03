@@ -76,6 +76,8 @@ async function LoginUser(req, res, next) {
             });
         }
         if (validUser) {
+            // const key = new LocalKey<null | string | unknown>("mykey", "");
+            // LocalStorage.setItem(key, "token");
             res.cookie("authorization", token, {
                 httpOnly: true,
                 maxAge: 1000 * 60 * 60 * 24,
@@ -88,6 +90,7 @@ async function LoginUser(req, res, next) {
         }
     }
     catch (err) {
+        console.log(err);
         res.status(500).json({
             msg: "failed to login",
             route: "/login",

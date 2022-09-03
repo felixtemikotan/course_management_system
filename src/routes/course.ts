@@ -14,6 +14,7 @@ import {
 
 router.post("/create", auth, createCourse);
 router.get("/read", getCourse);
+router.get("", getCourse);
 router.get("/read/:id", getSingleCourse);
 router.post("/update/:id", auth, updateCourse);
 router.get("/readdelete/:id", auth, getDeleteSingleCourse);
